@@ -9,7 +9,7 @@ def client():
 
 
 def test_get_transactions(client):
-    response = client.get('/transaction')
+    response = client.get('/transactions')
     assert response.status_code == 200
     assert response.get_json() == []
 
