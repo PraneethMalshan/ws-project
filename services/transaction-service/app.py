@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 transactions = []
 
-@app.route('/transactions', methods=['GET'])
+@app.route('/transaction', methods=['GET'])
 def get_transactions():
     return jsonify(transactions), 200
 
