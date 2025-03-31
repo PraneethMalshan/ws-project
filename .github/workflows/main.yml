@@ -34,7 +34,7 @@ jobs:
           cd services/$service
           pip install -r requirements.txt
           pytest
-          cd ../../
+          cd ../..
         done
 
     - name: Clean up
