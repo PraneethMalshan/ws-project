@@ -16,8 +16,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker
-      run: docker version  # Use this if Buildx is not required
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.PASSWORD }}" | docker login -u "${{ secrets.USERNAME }}" --password-stdin
@@ -26,10 +26,6 @@ jobs:
       run: |
         services=("crypto-price-service" "transaction-service" "account-service")
         for service in "${services[@]}"; do
-          if [ ! -f "./services/$service/Dockerfile" ]; then
-              echo "Error: Dockerfile missing in ./services/$service"
-              exit 1
-          fi
           # Build Docker image
           docker build -t ${{ secrets.USERNAME }}/$service:latest ./services/$service
           # Push Docker image
@@ -42,4 +38,5 @@ jobs:
         done
 
     - name: Clean up
-      run: docker system prune -af
+      run: |
+        docker system prune -af
